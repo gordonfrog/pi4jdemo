@@ -18,7 +18,7 @@ node {
     // Maven plugin to generate the image; We skip tests
     // because they were already performed in the compile stage.
     stage ("Docker Image Build") {
-        sh "mvn dockerfile:build -Ddockerfile.contextDirectory=src/main/resources/deployment/docker -DskipTests=true"
+        sh "mvn dockerfile:build -Ddockerfile.contextDirectory=docker -DskipTests=true"
     }
     
     // Stop and remove any existing same-named containers to
