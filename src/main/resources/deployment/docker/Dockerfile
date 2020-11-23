@@ -13,7 +13,7 @@ RUN apk add --no-cache bash
 LABEL maintainer="Scott McCrory <scott@mccrory.us>"
 
 # Add our application's jar to the container
-ADD target/pi4jdemo-0.0.1-SNAPSHOT.jar app.jar
+ADD src/main/target/pi4jdemo-0.0.1-SNAPSHOT.jar app.jar
 
 # Make port 8001 (debug) available to the world outside this container
 EXPOSE 8001
