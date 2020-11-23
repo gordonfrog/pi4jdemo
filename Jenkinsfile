@@ -18,14 +18,14 @@ node {
     // Maven plugin to generate the image; We skip tests
     // because they were already performed in the compile stage.
     stage ("Docker Image Build") {
-        sh "sudo mvn dockerfile:build -Ddockerfile.contextDirectory=src/main/resources/deployment/docker -DskipTests=true"
+        sh "mvn dockerfile:build -Ddockerfile.contextDirectory=src/main/resources/deployment/docker -DskipTests=true"
     }
     
     // Stop and remove any existing same-named containers to
     // avoid duplicates and port contention.
     stage ("Stop and Remove Existing Containers") {
-        sh "sudo docker stop pi4jdemo || true"
-        sh "sudo docker rm pi4jdemo || true"
+        sh "docker stop pi4jdemo || true"
+        sh "docker rm pi4jdemo || true"
     }
 
     // Run the refreshed image as a container; Note that we
@@ -33,7 +33,7 @@ node {
     // make the debug port of 8001 and the application web server
     // port (if setup to listen) available to the host machine.
     stage("Run Refreshed Container") {
-        sh "sudo docker run -d --restart=always -p 8001:8001 -p 9080:9080 --name pi4jdemo pi4jdemo:0.0.1-SNAPSHOT"
+        sh "docker run -d --restart=always -p 8001:8001 -p 9080:9080 --name pi4jdemo pi4jdemo:0.0.1-SNAPSHOT"
         sh "echo 'A running pi4jdemo container should soon be available for remote debugging on port 8001.'"
     }
     
@@ -42,7 +42,7 @@ node {
     // You could eliminate this step by running everything or nothing
     // with sudo.
     stage("Cleanup") {
-        sh "sudo rm -rf target"
+        sh "rm -rf target"
     }
 
 }
