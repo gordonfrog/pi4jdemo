@@ -11,17 +11,17 @@ node {
    
     // Stop the prior deployment if necessary
     stage("Stop existing process") {
-        sh 'sudo lsof -n -i4TCP:8001 | grep LISTEN | awk \'{ print $2 }\' | sudo xargs kill | true'
+        sh 'lsof -n -i4TCP:8001 | grep LISTEN | awk \'{ print $2 }\' | xargs kill | true'
     }
 
     // Compile and test the application.
     stage ("Compile and Test") {
-        sh "sudo mvn clean package"
+        sh "mvn clean package"
     }
 
     // Run the application
     stage("Run Application") {
-        sh 'nohup sudo mvn spring-boot:run &'
+        sh 'nohup mvn spring-boot:run &'
         sh "echo 'A running pi4jdemo app should soon be available for remote debugging on port 8001.'"
     }
     
